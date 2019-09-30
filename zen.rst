@@ -1,8 +1,11 @@
-1. Zen of Python
+0. Zen of Python
 ================
 
+
 ::
+
     import this
+
 
 The Zen of Python, by Tim Peters
 

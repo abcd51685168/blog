@@ -1,6 +1,6 @@
 2. Flatten Nested List
 ======================
-使用itertools.chain生成迭代器循环，速度最快，输入为多个元素，如果为一个list需要解包
+使用itertools.chain生成迭代器循环，速度最快，输入为多个元素，如果输入是单元素需要解包
 from_iterable输入为迭代器
 
 ::
