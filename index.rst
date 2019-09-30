@@ -8,6 +8,7 @@ Welcome to Chy's BLOG's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :glob:
 
-   c01
+   zen
+   contents/*

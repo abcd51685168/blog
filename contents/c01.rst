@@ -1,5 +1,5 @@
-1 Breaking out of nested loops
-==============================
+1. Breaking out of nested loops
+===============================
 
 ::
 
@@ -29,4 +29,5 @@ The same works for deeper loops:
             continue
         break
 
-reference: https://stackoverflow.com/questions/653509/breaking-out-of-nested-loops/654002#654002
+reference:
+https://stackoverflow.com/questions/653509/breaking-out-of-nested-loops/654002#654002
