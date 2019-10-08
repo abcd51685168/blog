@@ -1,0 +1,13 @@
+5. 多进程vs多线程
+=========================
+
+             Multi-args   Concurrence    Blocking     Ordered-results
+
+map          no           yes            yes          yes
+apply        yes          no             yes          no
+map_async    no           yes            no           yes
+apply_async  yes          yes            no           no
+
+
+
+
