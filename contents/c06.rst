@@ -1,7 +1,7 @@
 6. logging模块
 =========================
 
-对于一个模块中，主脚本初始化logging之后，其他脚本可以通过log = logging.getLogger(__name__)来进行调用，此处有一个坑，就是需要在主脚本中设置log = logging.getLogger()而不能带有参数（默认是None），
+对于一个模块中，主脚本初始化logging之后，其他脚本可以通过log = logging.getLogger(__name__)来进行调用，此处有一个坑，就是需要在主脚本中设置log = logging.getLogger()而不能带有参数（默认是None）
 
 1. logging对象其实是一个树形结构，每个创建的logging对象都是root logging对象的孩子结点。当使用logging模块的getLogger(name=None)函数构造logging对象的时候，如果name为None，这样会产生一个root logging对象。如果name中含有.，比如name = 'a.b.c'，通过这种方式会产生3个logging对象，分别为c、b、a，c->b->a->root，root树的根结点，a为root的孩子结点，b为a的孩子结点，c为a的孩子结点，依次类推。
 

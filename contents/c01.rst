@@ -30,5 +30,4 @@ The same works for deeper loops:
         break
 
 reference:
-----------
 https://stackoverflow.com/questions/653509/breaking-out-of-nested-loops/654002#654002

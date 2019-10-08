@@ -22,6 +22,7 @@
 构造器有相关namespace的骚操作
 
 ::
+
     class A:
         def __init__(self,a,b,c,d,e):
             self.__dict__.update({k: v for k, v in locals().items if k != 'self'})
