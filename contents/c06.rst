@@ -1,0 +1,33 @@
+6. logging模块
+=========================
+
+对于一个模块中，主脚本初始化logging之后，其他脚本可以通过log = logging.getLogger(__name__)来进行调用，此处有一个坑，就是需要在主脚本中设置log = logging.getLogger()而不能带有参数（默认是None），
+
+1. logging对象其实是一个树形结构，每个创建的logging对象都是root logging对象的孩子结点。当使用logging模块的getLogger(name=None)函数构造logging对象的时候，如果name为None，这样会产生一个root logging对象。如果name中含有.，比如name = 'a.b.c'，通过这种方式会产生3个logging对象，分别为c、b、a，c->b->a->root，root树的根结点，a为root的孩子结点，b为a的孩子结点，c为a的孩子结点，依次类推。
+
+2. root结点是全局的，虽然这过程中涉及到多个模块，但是它们会共享一个root结点。
+
+3. 每个logging对象打LOG的时候，也会把LOG信息传递到传递到上层logging对象中，对于c->b->a->root这种情况，这个LOG其实会打4次，以c、b、a、root循序依次打一个LOG。
+
+
+::
+
+    import logging.handlers
+    from pathlib import Path
+
+    def init_logging(log_file=str(Path(__file__).stem) + '.log', log_dir='log', debug=False):
+        log = logging.getLogger()
+        formatter = logging.Formatter('%(asctime)s [%(name)s] %(levelname)s: %(message)s')
+
+        fh = logging.handlers.WatchedFileHandler(os.path.join(log_dir, log_file))
+        fh.setFormatter(formatter)
+        log.addHandler(fh)
+
+        ch = logging.StreamHandler()
+        ch.setFormatter(formatter)
+        log.addHandler(ch)
+
+        level = logging.DEBUG if debug else logging.INFO
+        log.setLevel(level)
+        return log
+

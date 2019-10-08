@@ -1,0 +1,29 @@
+7. 动态导入所有子类
+=========================
+经常存在某目录下的所有文件都继承某个子类，动态导入所有子类，原理就是按子类名称与子类以键值的形式存在globals()中，使用的时候直接取，好好思考下The Zen of Python中提到的最后一条：Namespaces are one honking great idea
+
+
+::
+
+    def enumerate_plugins(dirpath, class_):
+        """import modules dynamicly"""
+        for _, name, _ in pkgutil.iter_modules([dirpath]):
+            try:
+                importlib.import_module(dirpath + '.' + name)
+            except ImportError:
+                raise ImportError
+            else:
+                subclass = class_.__subclasses__()[-1]
+                globals()[subclass.__name__] = subclass
+
+    enumerate_plugins('dir_path', BaseClass)
+
+
+构造器有相关namespace的骚操作
+
+::
+    class A:
+        def __init__(self,a,b,c,d,e):
+            self.__dict__.update({k: v for k, v in locals().items if k != 'self'})
+
+

@@ -1,5 +1,8 @@
-5. 多进程vs多线程
+5. 进程池vs线程池
 =========================
+
+5.1 进程池
+-----------
 
 ===========     ==========  ===========     ========    ===============
                 Multi-args  Concurrence     Blocking    Ordered-results
@@ -10,6 +13,45 @@ apply_async     yes         yes             no          no
 ===========     ==========  ===========     ========    ===============
 
 
+一般情况下需要生成数据用map_async,不生成数据只执行相关操作（比如生成文件）用apply_async,python3新增starmap_async,支持函数带多个参数
+
+::
+
+    import signal
+    from multiprocessing import Pool, cpu_count
+
+    def init_worker():
+        signal.signal(signal.SIGINT, signal.SIG_IGN)
+
+    def multi_process_map_async(func, items):
+        pool = Pool(processes=cpu_count() - 1, initializer=init_worker, maxtasksperchild=400)
+        ret = pool.map_async(func, items)
+        pool.close()
+        pool.join()
+        return ret.get() if ret.successful() else []
 
 
+    def multi_process_apply_async(func, items):
+        pool = Pool(processes=cpu_count() - 1, initializer=init_worker, maxtasksperchild=400)
+        for item in items:
+            pool.apply_async(func, (item,))
+        pool.close()
+        pool.join()
+
+5.2 线程池
+----------
+
+线程池的实现方式只要把multiprocessing变为multiprocessing.dummy，其余都一样
+
+::
+
+    from multiprocessing.dummy import Pool
+
+
+
+reference:
+----------
+https://blog.csdn.net/fcku_88/article/details/99685540
+
+http://blog.shenwei.me/python-multiprocessing-pool-difference-between-map-apply-map_async-apply_async/
 
