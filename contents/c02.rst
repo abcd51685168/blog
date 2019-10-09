@@ -24,4 +24,5 @@ from_iterable输入为迭代器
 
 
 reference:
+
 https://stackoverflow.com/questions/952914/how-to-make-a-flat-list-out-of-list-of-lists#

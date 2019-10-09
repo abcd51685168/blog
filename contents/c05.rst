@@ -52,6 +52,5 @@ apply_async     yes         yes             no          no
 reference:
 
 https://blog.csdn.net/fcku_88/article/details/99685540
-
 http://blog.shenwei.me/python-multiprocessing-pool-difference-between-map-apply-map_async-apply_async/
 
