@@ -21,6 +21,12 @@ iter()函数可以把list，dict，str等Iterable转换为Iterator
     >>> list(group_adjacent(a, 2))
     [(1, 2), (3, 4), (5, 6)]
 
+more_itertools库的chunked
+    >>> from more_itertools import chunked
+    >>> list(chunked([1, 2, 3, 4, 5, 6], 3))
+    [[1, 2, 3], [4, 5, 6]]
+
+
 当然用列表的切片操作也可以
 
 ::
