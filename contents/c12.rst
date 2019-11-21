@@ -1,0 +1,68 @@
+12. next & iter
+=======================
+iter
+---------------
+可迭代的对象（可以用for循环的对象）Iterable：
+一类：list，tuple，dict，set，str
+二类：generator，包含生成器和带yield的generator function
+生成器不但可以作用于for，还可以被next()函数不断调用并返回下一个值
+可以被next()函数不断返回下一个值的对象称为迭代器：Iterator
+生成器都是Iterator对象，但list，tuple，dict，set，str是Iterable，但不是Iterator，
+iter()函数可以把list，dict，str等Iterable转换为Iterator
+
+巧用iter分组，对一列表每隔k位分组
+
+::
+
+    >>> a = [1, 2, 3, 4, 5, 6]
+    >>> group_adjacent = lambda a, k: zip(*([iter(a)] * k))
+    >>> list(group_adjacent(a, 3))
+    [(1, 2, 3), (4, 5, 6)]
+    >>> list(group_adjacent(a, 2))
+    [(1, 2), (3, 4), (5, 6)]
+
+当然用列表的切片操作也可以
+
+::
+
+    >>> group_adjacent = lambda a, k: zip(*(a[i::k] for i in range(k)))
+    >>> group_adjacent(a, 3)
+    [(1, 2, 3), (4, 5, 6)]
+
+滑动分组
+
+::
+    >>> def n_grams(a, n):
+    ...     z = [iter(a[i:]) for i in range(n)]
+    ...     return zip(*z)
+    >>> a = [1, 2, 3, 4, 5, 6]
+    >>> n_grams(a, 3)
+    [(1, 2, 3), (2, 3, 4), (3, 4, 5), (4, 5, 6)]
+    >>> n_grams(a, 2)
+    [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6)]
+
+
+iter(object, sentinel)
+----------------------
+如果传递了第二个参数，则object必须是一个可调用的对象（如，函数）。
+此时，iter创建了一个迭代器对象，每次调用这个迭代器对象的__next__()方法时，都会调用object，就是保证object有__call__函数，
+如果__next__的返回值等于sentinel，则抛出StopIteration异常，否则返回下一个值。
+
+::
+
+    >>> from functools import partial
+    >>> blocks = []
+    ... for block in iter(partial(f.read, 32), ''):
+    ...     blocks.append(block)
+
+
+next
+----------
+获取迭代器的下一个元素，迭代完最后一个元素后，再次调用next()会抛出StopIteration的异常
+
+循环迭代器, 直到找到符合的结果, 没有结果返回一个默认值
+
+::
+
+    >>> next((i for i in range(1, 10) if not i % 4), -1)
+    4

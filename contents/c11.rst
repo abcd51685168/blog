@@ -1,0 +1,59 @@
+11. functools
+=========================
+partial
+----------
+偏函数，固定其中某几个参数
+
+1. 不加关键字则默认将前面的参数顺序固定，正常调用
+
+::
+
+    >>> from functools import partial
+    >>> def test_partial(a, b, c, d):
+    ...     print a,b,c,d
+    >>> test1 = partial(test_partial,1,2)
+    >>> test1(3,4)
+    1 2 3 4
+
+2. 加参数按从后往前固定参数，正常调用
+
+::
+
+    >>> test4 = partial(test_partial, c=3, d=4)
+    >>> test4(1,2)
+    1 2 3 4
+
+3. 加参数不是从后往前固定参数，则需要用关键字参数进行函数调用，不推荐……
+
+::
+
+    >>> test5 = partial(test_partial, b=2, d=4)
+    >>> test5(1,c=3)
+    1 2 3 4
+    >>> test6 = partial(test_partial, a=1,b=3)
+    >>> test6(c=3,d=4)
+    1 3 3 4
+
+
+total_ordering
+---------------
+完善对象比较操作，只需要定义__eq__以及__lt__、__le__、__gt__、__ge__四种之一
+
+::
+
+    >>> import functools
+    >>> @functools.total_ordering
+    ... class Size:
+    ...     def __init__(self, value):
+    ...         self.value = value
+    ...     def __lt__(self,other):
+    ...         return self.value < other.value
+    ...     def __eq__(self, other):
+    ...         return self.value == other.value
+    ...
+    >>> Size(3) > Size(2)
+    True
+    >>> Size(2) == Size(2)
+    True
+    >>> Size(3) <= Size(2)
+    False
