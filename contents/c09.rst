@@ -87,3 +87,11 @@ combinations_with_replacement(iterable, r) 返回一个可与自身重复的元�
 
     >>> list(itertools.combinations_with_replacement('1234', 2))
     [('1', '1'), ('1', '2'), ('1', '3'), ('1', '4'), ('2', '2'), ('2', '3'), ('2', '4'), ('3', '3'), ('3', '4'), ('4', '4')]
+
+reference:
+
+https://docs.python.org/3.7/library/itertools.html
+
+https://more-itertools.readthedocs.io/en/stable/
+
+https://realpython.com/python-itertools/
