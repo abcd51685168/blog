@@ -57,3 +57,12 @@ total_ordering
     True
     >>> Size(3) <= Size(2)
     False
+
+
+reference:
+
+https://docs.python.org/3.7/library/itertools.html
+
+https://more-itertools.readthedocs.io/en/stable/
+
+https://realpython.com/python-itertools/
